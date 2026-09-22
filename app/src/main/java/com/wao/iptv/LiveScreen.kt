@@ -168,7 +168,7 @@ fun LiveScreen(vm: AppViewModel, nav: NavController) {
                         }
                     }
                 } else {
-                    Txt("Is category me koi channel nahi mila", 12, Slate500, Modifier.align(Alignment.Center))
+                    Txt("Is category me koi channel nahi mila", 12, Slate500, modifier = Modifier.align(Alignment.Center))
                 }
             }
         }

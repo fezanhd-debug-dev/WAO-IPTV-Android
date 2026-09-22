@@ -9,6 +9,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,7 +34,7 @@ private fun RadioRow(label: String, sub: String, selected: Boolean, enabled: Boo
     ) {
         Column(Modifier.weight(1f)) {
             Txt(label, 12, if (enabled) Color.White else Slate400, FontWeight.SemiBold)
-            if (sub.isNotBlank()) Txt(sub, 10, Slate500, Modifier.padding(top = 2.dp))
+            if (sub.isNotBlank()) Txt(sub, 10, Slate500, modifier = Modifier.padding(top = 2.dp))
         }
         RadioButton(
             selected = selected,
@@ -56,7 +57,7 @@ fun SettingsScreen(vm: AppViewModel, nav: NavController) {
     Column(Modifier.fillMaxSize().background(Bg)) {
         Column(Modifier.fillMaxWidth().padding(16.dp)) {
             Txt("App Settings & Decoder", 18, Color.White, FontWeight.Black)
-            Txt("Manage hardware codecs, cache & parental PIN", 11, Slate400, Modifier.padding(top = 2.dp))
+            Txt("Manage hardware codecs, cache & parental PIN", 11, Slate400, modifier = Modifier.padding(top = 2.dp))
         }
         HLine()
 
@@ -70,7 +71,7 @@ fun SettingsScreen(vm: AppViewModel, nav: NavController) {
                         val exp = vm.account.expDate
                         if (exp > 0) {
                             val df = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-                            Txt("Expires: ${df.format(Date(exp * 1000))}", 11, Slate400, Modifier.padding(top = 2.dp))
+                            Txt("Expires: ${df.format(Date(exp * 1000))}", 11, Slate400, modifier = Modifier.padding(top = 2.dp))
                         }
                         if (vm.account.maxConnections.isNotBlank()) {
                             Txt("Max connections: ${vm.account.maxConnections}", 11, Slate500)

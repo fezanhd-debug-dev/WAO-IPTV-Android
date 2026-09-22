@@ -3,23 +3,36 @@ package com.wao.iptv
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.activity.viewModels
+import androidx.compose.runtime.*
+import androidx.compose.ui.platform.LocalContext
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 
 class MainActivity : ComponentActivity() {
+    private val vm: AppViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            Box(
-                modifier = Modifier.fillMaxSize().background(Color(0xFF0A0E1A)),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(text = "WAO IPTV - Step 1 OK", color = Color(0xFF00E5FF))
+            WaoTheme {
+                val ctx = LocalContext.current
+                val tv = remember { isTvMode(ctx, vm.settings.uiMode) }
+                vm.homeRoute = if (tv) "tv_home" else "home"
+                val nav = rememberNavController()
+
+                NavHost(navController = nav, startDestination = "boot") {
+                    composable("boot") { BootScreen(vm, nav) }
+                    composable("login") { LoginScreen(vm, nav) }
+                    composable("home") { HomeScreen(vm, nav) }
+                    composable("live") { LiveScreen(vm, nav) }
+                    composable("vod") { VodScreen(vm, nav) }
+                    composable("settings") { SettingsScreen(vm, nav) }
+                    composable("player") { PlayerScreen(vm, nav) }
+                    composable("tv_home") { TvHomeScreen(vm, nav) }
+                    composable("tv_quad") { TvQuadViewScreen(vm, nav) }
+                }
             }
         }
     }

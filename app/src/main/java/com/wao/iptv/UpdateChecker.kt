@@ -7,7 +7,7 @@ data class UpdateInfo(
     val versionName: String,
     val apkUrl: String,
     val notes: String,
-    val forceUpdate: Boolean = false,
+    val forceUpdate: Boolean = true,
     val minSupportedVersionCode: Int = 0
 )
 
